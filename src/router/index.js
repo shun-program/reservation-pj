@@ -5,6 +5,9 @@ import Login from '../views/Login.vue'
 import Registration from '../views/Registration.vue'
 import Thanks from '../views/Thanks.vue'
 import Done from '../views/Done.vue'
+import Detail from '../views/Detail.vue'
+import Mypage from '../views/Mypage.vue'
+import store from "../store/index"
 
 Vue.use(VueRouter)
 
@@ -15,7 +18,10 @@ const routes = [{
 }, {
   path: '/home',
   name: 'Home',
-  component: Home
+  component: Home,
+  meta: {
+    requiresAuth: true,
+  },
   }, {
   path: '/registration',
   name: 'registration',
@@ -23,17 +29,52 @@ const routes = [{
 }, {
   path: '/thanks',
   name: 'thanks',
-  component: Thanks
+  component: Thanks,
+  meta: {
+    requiresAuth: true,
+  },
 }, {
   path: '/done',
   name: 'done',
-  component: Done
-}]
+  component: Done,
+  meta: {
+    requiresAuth: true,
+  },
+}, {
+  path: '/detail',
+  name: 'detail',
+  component: Detail,
+  meta: {
+    requiresAuth: true,
+  },
+  }, {
+  path: '/mypage',
+  name: 'mypage',
+  component: Mypage,
+   meta: {
+    requiresAuth: true,
+  },
+  }]
 
 const router = new VueRouter({
- mode: 'history',
- base: process.env.BASE_URL,
- routes
-})
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes,
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  if (
+    to.matched.some((record) => record.meta.requiresAuth) &&!store.state.auth
+  ) {
+    next({
+      path: "/",
+      query: {
+        redirect: to.fullPath,
+      },
+    });
+  } else {
+    next();
+  }
+});
+
+export default router;

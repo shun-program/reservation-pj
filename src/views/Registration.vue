@@ -19,12 +19,44 @@
         <img class="icon pass" src="../assets/password.png" alt />  
         <input placeholder="Password" type="password" />
       <div>
-        <a href="#" class="btn btn-primary">登録</a>
+        <a href="#" class="btn btn-primary" @click="auth">登録</a>
       </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    auth() {
+      axios
+      .post("http://127.0.0.1:8000/api/register", {
+        id: this.id,
+        name: this.name,
+        email: this.email,
+        password: this.password
+      })
+       .then(response => {
+          console.log(response);
+          this.$router.replace("/thanks");
+        })
+        .catch(error => {
+          alert(error);
+        });
+    }
+  }
+};
+</script>
+
 
 <style scoped>
 .left {

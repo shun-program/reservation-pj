@@ -15,12 +15,31 @@
         <img class="icon pass" src="../assets/password.png" alt />  
         <input placeholder="Password" type="password" />
         <div>
-        <a href="#" class="btn btn-primary">登録</a>
+        <a href="#" class="btn btn-primary" @click="auth">ログイン</a>
       </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    auth() {
+      this.$store.dispatch("login", {
+        email: this.email,
+        password: this.password
+      });
+    }
+  }
+};
+</script>
 
 <style scoped>
 .left {
