@@ -30,9 +30,6 @@ const routes = [{
   path: '/thanks',
   name: 'thanks',
   component: Thanks,
-  meta: {
-    requiresAuth: true,
-  },
 }, {
   path: '/done',
   name: 'done',
@@ -41,7 +38,7 @@ const routes = [{
     requiresAuth: true,
   },
 }, {
-  path: '/detail',
+  path: '/detail/:shop_id',
   name: 'detail',
   component: Detail,
   meta: {
@@ -51,6 +48,7 @@ const routes = [{
   path: '/mypage',
   name: 'mypage',
   component: Mypage,
+  props: true,
    meta: {
     requiresAuth: true,
   },

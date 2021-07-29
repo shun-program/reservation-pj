@@ -1,10 +1,7 @@
 <template>
   <div class="detail">
     <HeaderAuth />
-
       <div class="box">
-
-
           <div class="left-box" v-for="item in shop_list" :key="item">
             <button type="button" class="btn btn-outline-dark" @click="returnHome">＜</button>
             <p class="shop_name">{{ item.shop_name }}</p>  
@@ -13,8 +10,6 @@
             <p class="shop_genre">#{{ item.shop_genre }}</p>
             <p class="info">{{ item.shop_info }}</p>
           </div>
-     
-
         <div class="right-box" v-for="item in shop_list" :key="item">
           <div id="date">
             <h1>予約</h1>
@@ -65,33 +60,27 @@
             <p class="shop_time">Time<span class="space">{{ time }}</span></p>
             <p class="shop_num">Number<span class="space">{{ text }}</span></p>
           </div>
-         
-          
-          
-          <div class="d-grid gap-2">
           <button class="btn btn-primary" type="button">予約する</button>
-</div>
-</div>
-           
 
+        </div>  
       </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import HeaderAuth from "../components/HeaderAuth.vue"
-// import axios from 'axios';
 export default {
   data() {
     return {
       shop_list: [
       {
-         shop_id:"",
-        shop_img: "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg",
-        shop_name: "仙人",
-        shop_area: "東京都",
-        shop_genre: "寿司",
-        shop_info: "料理長厳選の食材から作る寿司を用いたコースをぜひお楽しみください。食材・味・価格、お客様の満足度を徹底的に追及したお店です。特別な日のお食事、ビジネス接待まで気軽に使用することができます。",
+        shop_id:"",
+        shop_img: "",
+        shop_name: "",
+        shop_area: "",
+        shop_genre: "",
+        shop_info: ""
 
       }],
       time: "",
@@ -99,12 +88,23 @@ export default {
       text: ""
          };
   },
-    
   methods: {
     returnHome(){
       this.$router.push('/home')
+    },
+    async getDetail(){
+      const item =await axios.get(
+      `http://127.0.0.1:8000/api/shops/` + this.shop_id
+    );
+    this.shop_list = item.data.data; 
+    console.log(this.shop_list);
     }
   },
+  created(){
+    this.getDetail();
+  },
+  props: ["shop_id"],
+
   components: {
     HeaderAuth
   }

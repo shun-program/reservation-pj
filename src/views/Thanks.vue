@@ -6,7 +6,7 @@
     <div class="card text-center">
      <div class="card-body">
       <p class="card-text">会員登録ありがとうございます</p>
-      <a href="#" class="btn btn-primary">ログインする</a>
+      <a href="#" class="btn btn-primary" @click="$router.push('/')">ログインする</a>
      </div>
     </div>
   </div>

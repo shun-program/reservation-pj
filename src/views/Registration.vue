@@ -9,15 +9,15 @@
       </div>
       <div class="card-body">
         <img class="icon user" src="../assets/user.png" alt />  
-        <input placeholder="Username" type="text" />
+        <input placeholder="Username" type="text" v-model="name" />
       </div>
       <div class="card-body">
         <img class="icon email" src="../assets/email.png" alt />  
-        <input placeholder="Email" type="email" />
+        <input placeholder="Email" type="email" v-model="email" />
       </div>
       <div class="card-body">
         <img class="icon pass" src="../assets/password.png" alt />  
-        <input placeholder="Password" type="password" />
+        <input placeholder="Password" type="password" v-model="password" />
       <div>
         <a href="#" class="btn btn-primary" @click="auth">登録</a>
       </div>
@@ -40,7 +40,6 @@ export default {
     auth() {
       axios
       .post("http://127.0.0.1:8000/api/register", {
-        id: this.id,
         name: this.name,
         email: this.email,
         password: this.password

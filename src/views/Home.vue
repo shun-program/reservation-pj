@@ -40,7 +40,7 @@
         <p class="shop_area">#{{ item.shop_area }}</p>
         <p class="shop_genre">#{{ item.shop_genre }}</p>
       </div>
-      <a href="#" class="btn btn-primary">詳しく見る</a>
+      <a href="#" class="btn btn-primary" @click="detail(item.shop_id)">詳しく見る</a>
       <img class="icon" src="../assets/heart.png" />
      </div>
     </div>
@@ -52,54 +52,35 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default { 
   data() {
     return {
       shop_list: [
       {
         shop_id:"",
-        shop_img: "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg",
-        shop_name: "仙人",
-        shop_area: "東京都",
-        shop_genre: "寿司"
-      },
-      {
-        shop_id:"",
-        shop_img: "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg",
-        shop_name: "牛助",
-        shop_area: "大阪府",
-        shop_genre: "焼肉"
-      },
-      {
-        shop_id:"",
-        shop_img: "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg",
-        shop_name: "戦慄",
-        shop_area: "福岡県",
-        shop_genre: "居酒屋"
-      },
-      {
-        shop_id:"",
-        shop_img: "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg",
-        shop_name: "ルーク",
-        shop_area: "東京都",
-        shop_genre: "イタリアン"
-      },
-      {
-        shop_id:"",
-        shop_img: "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/ramen.jpg",
-        shop_name: "志摩屋",
-        shop_area: "福岡県",
-        shop_genre: "ラーメン"
-      },
-      {
-        shop_id:"",
-        shop_img: "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg",
-        shop_name: "香",
-        shop_area: "東京都",
-        shop_genre: "焼肉"
+        shop_img: "",
+        shop_name: "",
+        shop_area: "",
+        shop_genre: ""
       }]
     };
   },
+  methods: {
+    async created() {
+    const item = await axios.get(
+      "http://127.0.0.1:8000/api/shops"
+    );
+    this.shop_list = item.data.data; 
+    console.log(this.shop_list);
+  },
+   detail(shop_id) {
+   this.$router.push({path: '/detail/'+shop_id});
+  },
+  },
+    created(){
+    this.created();
+    },
   
   };
 </script>
