@@ -2,15 +2,15 @@
   <div class="detail">
     <HeaderAuth />
       <div class="box">
-          <div class="left-box" v-for="item in shop_list" :key="item">
+          <div class="left-box">
             <button type="button" class="btn btn-outline-dark" @click="returnHome">＜</button>
-            <p class="shop_name">{{ item.shop_name }}</p>  
-            <img :src="item.shop_img"  class="img"/>
-            <p class="shop_area">#{{ item.shop_area }}</p>
-            <p class="shop_genre">#{{ item.shop_genre }}</p>
-            <p class="info">{{ item.shop_info }}</p>
+            <p class="shop_name">{{ shop_list.shop_name }}</p>  
+            <img :src="shop_list.shop_img"  class="img"/>
+            <p class="shop_area">#{{ shop_list.shop_area }}</p>
+            <p class="shop_genre">#{{ shop_list.shop_genre }}</p>
+            <p class="info">{{ shop_list.shop_info }}</p>
           </div>
-        <div class="right-box" v-for="item in shop_list" :key="item">
+        <div class="right-box">
           <div id="date">
             <h1>予約</h1>
            </div>
@@ -55,12 +55,12 @@
           </select>
 
           <div class="card">
-            <p class="shop_name">Shop<span class="space">{{ item.shop_name }}</span></p>  
+            <p class="shop_name">Shop<span class="space">{{ shop_list.shop_name }}</span></p>  
             <p class="shop_date">Date<span class="space">{{ date }}</span></p>
             <p class="shop_time">Time<span class="space">{{ time }}</span></p>
             <p class="shop_num">Number<span class="space">{{ text }}</span></p>
           </div>
-          <button class="btn btn-primary" type="button">予約する</button>
+          <button class="btn btn-primary" type="button" @click="reservation">予約する</button>
 
         </div>  
       </div>
@@ -92,12 +92,21 @@ export default {
     returnHome(){
       this.$router.push('/home')
     },
+    reservation(){
+      this.$router.push('/done')
+    },
+    // async reservation(){
+    //   const serdData = {
+        
+    //   };
+    // },
     async getDetail(){
       const item =await axios.get(
       `http://127.0.0.1:8000/api/shops/` + this.shop_id
     );
     this.shop_list = item.data.data; 
     console.log(this.shop_list);
+    console.log(item);
     }
   },
   created(){

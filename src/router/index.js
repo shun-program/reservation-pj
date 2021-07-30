@@ -41,9 +41,10 @@ const routes = [{
   path: '/detail/:shop_id',
   name: 'detail',
   component: Detail,
-  meta: {
-    requiresAuth: true,
-  },
+  props: true
+  // meta: {
+  //   requiresAuth: true,
+  // },
   }, {
   path: '/mypage',
   name: 'mypage',
